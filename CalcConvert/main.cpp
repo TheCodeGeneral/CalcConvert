@@ -4,9 +4,29 @@
 #define WHITE_BACKGROUND SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE) | FOREGROUND_RED & FOREGROUND_GREEN & FOREGROUND_BLUE) 
 #define BLACK_BACKGROUND SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (BACKGROUND_RED & BACKGROUND_GREEN & BACKGROUND_BLUE) | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE) 
 
-void DrawMenu();
-
+short MainMenu();
+void SingleNumber();
+void DoubleNumber();
 int main()
+{
+    switch (MainMenu())
+    {
+    case 0:
+        // Single number input
+        SingleNumber();
+        break;
+    case 1:
+        // 2 Number input
+        DoubleNumber();
+        break;
+    case 2:
+        // Exit
+        break;
+    }
+	return 0;
+}
+
+short MainMenu()
 {
     bool doLoop = true;
     short curPos = 0;
@@ -49,9 +69,11 @@ int main()
             {
             case 0:
                 // Single number input
+                doLoop = !doLoop;
                 break;
             case 1:
                 // 2 Number input
+                doLoop = !doLoop;
                 break;
             case 2:
                 // Exit
@@ -76,5 +98,13 @@ int main()
         Sleep(100);
         system("cls");
     }
-	return 0;
+    return curPos;
+}
+void SingleNumber()
+{
+
+}
+void DoubleNumber()
+{
+
 }
