@@ -49,6 +49,8 @@ int main()
             {
             case 0:
                 // Single number input
+
+                doLoop = !doLoop;
                 break;
             case 1:
                 // 2 Number input
@@ -75,6 +77,8 @@ int main()
         }
         Sleep(100);
         system("cls");
+
+   
     }
 	return 0;
 }
