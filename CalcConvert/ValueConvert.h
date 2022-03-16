@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <bitset>
-namespace ValueConvert
+namespace VC
 {
     void FloatToBinary(float f);
     void FloatToHex(float f);

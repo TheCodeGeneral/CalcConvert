@@ -1,0 +1,16 @@
+Single Input
+
+IntToHex
+IntToBinary
+
+FloatToBinary +
+FloatToHex +
+
+HexToInt
+HexToFloat
+
+BinaryToInt
+BinaryToFloat
+
+Addition, Subtraction, Multiplication, Division
+AND, NOT, OR, NOR, XOR, SHR, SHL
