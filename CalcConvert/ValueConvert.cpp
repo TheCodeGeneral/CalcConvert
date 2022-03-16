@@ -12,7 +12,7 @@ namespace VC
             float f;
             char  b[sizeof(float)];
         };
-        union float_bytes fb = { 1.1 };
+        union float_bytes fb = { 1.1f };
         for (int i = sizeof(float) - 1; i >= 0; --i)
             printf("%hhx ", fb.b[i]);
     }
