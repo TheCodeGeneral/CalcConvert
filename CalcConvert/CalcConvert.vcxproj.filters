@@ -23,6 +23,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="tasks.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="ValueConvert.h">
       <Filter>Header Files</Filter>
     </ClInclude>

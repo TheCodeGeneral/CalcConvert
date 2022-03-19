@@ -17,4 +17,25 @@ namespace VC
             printf("%hhx ", fb.b[i]);
     }
 
+
+    void HexToInt() 
+    {
+
+    }
+
+    void HexToFloat()
+    {
+
+    }
+
+
+    void BinaryToInt()
+    {
+
+    }
+
+    void BinaryToFloat()
+    {
+
+    }
 }
