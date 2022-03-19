@@ -6,4 +6,10 @@ namespace VC
 {
     void FloatToBinary(float f);
     void FloatToHex(float f);
+
+    void HexToInt();
+    void HexToFloat();
+
+    void BinaryToInt();
+    void BinaryToFloat();
 }

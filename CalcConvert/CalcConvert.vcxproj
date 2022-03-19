@@ -140,6 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ValueConvert.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="tasks.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ValueConvert.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
