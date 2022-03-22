@@ -13,13 +13,13 @@
 #include <cmath>
 #include <map>
 #include <utility>
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
 #include <valarray>
-
-float cast_to_float(std::string f_test);
 
 namespace VC
 {
+    float cast_to_float(std::string f_test);
+
     void FloatToBinary(float f)
     {
         std::cout << std::bitset<sizeof f * 8>(*(long unsigned int*)(&f)) << std::endl;
