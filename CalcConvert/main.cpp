@@ -2,8 +2,8 @@
 #include <Windows.h>
 #include "ValueConvert.h"
 
-#define WHITE_BACKGROUND SetConsoleTextAttribute(hCon, (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE) | FOREGROUND_RED & FOREGROUND_GREEN & FOREGROUND_BLUE) 
-#define BLACK_BACKGROUND SetConsoleTextAttribute(hCon, (BACKGROUND_RED & BACKGROUND_GREEN & BACKGROUND_BLUE) | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE) 
+#define WHITE_BACKGROUND SetConsoleTextAttribute(hCon, (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE) | FOREGROUND_RED & FOREGROUND_GREEN & FOREGROUND_BLUE)
+#define BLACK_BACKGROUND SetConsoleTextAttribute(hCon, (BACKGROUND_RED & BACKGROUND_GREEN & BACKGROUND_BLUE) | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
 
 short MainMenu();
 void SingleNumber();
@@ -39,7 +39,7 @@ int main()
         // Exit
         break;
     }
-	return 0;
+    return 0;
 }
 
 short MainMenu()
@@ -95,7 +95,7 @@ void SingleNumber()
     SecondMenuOptions(curPos);
 
     while (doLoop)
-    {        
+    {
         // Get user input
         if (GetAsyncKeyState(VK_RETURN) & 0x1)
         {
@@ -121,6 +121,12 @@ void SingleNumber()
                 doLoop = !doLoop;
                 break;
             case 4:
+                //Return
+                system("cls");
+                MainMenu();
+                doLoop = !doLoop;
+                break;
+            case 5:
                 // Exit
                 doLoop = !doLoop;
                 break;
@@ -128,7 +134,7 @@ void SingleNumber()
         }
         else if (GetAsyncKeyState(VK_DOWN) & 0x1)
         {
-            if (curPos >= 0 && curPos < 4)
+            if (curPos >= 0 && curPos < 5)
             {
                 system("cls");
                 SecondMenuOptions(++curPos);
@@ -136,7 +142,7 @@ void SingleNumber()
         }
         else if (GetAsyncKeyState(VK_UP) & 0x1)
         {
-            if (curPos > 0 && curPos <= 4)
+            if (curPos > 0 && curPos <= 5)
             {
                 system("cls");
                 SecondMenuOptions(--curPos);
@@ -175,6 +181,12 @@ void DoubleNumber()
                 doLoop = !doLoop;
                 break;
             case 4:
+                //return
+                system("cls");
+                MainMenu();
+                doLoop = !doLoop;
+                break;
+            case 5:
                 // Exit
                 doLoop = !doLoop;
                 break;
@@ -182,7 +194,7 @@ void DoubleNumber()
         }
         else if (GetAsyncKeyState(VK_DOWN) & 0x1)
         {
-            if (curPos >= 0 && curPos < 4)
+            if (curPos >= 0 && curPos < 5)
             {
                 system("cls");
                 SecondMenuOptions(++curPos);
@@ -190,7 +202,7 @@ void DoubleNumber()
         }
         else if (GetAsyncKeyState(VK_UP) & 0x1)
         {
-            if (curPos > 0 && curPos <= 4)
+            if (curPos > 0 && curPos <= 5)
             {
                 system("cls");
                 SecondMenuOptions(--curPos);
@@ -246,6 +258,7 @@ void SecondMenuOptions(short curPos)
         std::cout << "[Hex]\n";
         std::cout << "[Binary]\n";
         std::cout << "[SEM]\n";
+        std::cout << "[Return]\n";
         std::cout << "[EXIT]\n";
         break;
     case 1:
@@ -255,6 +268,7 @@ void SecondMenuOptions(short curPos)
         BLACK_BACKGROUND;
         std::cout << "[Binary]\n";
         std::cout << "[SEM]\n";
+        std::cout << "[Return]\n";
         std::cout << "[EXIT]\n";
         break;
     case 2:
@@ -264,6 +278,7 @@ void SecondMenuOptions(short curPos)
         std::cout << "[Binary]\n";
         BLACK_BACKGROUND;
         std::cout << "[SEM]\n";
+        std::cout << "[Return]\n";
         std::cout << "[EXIT]\n";
         break;
     case 3:
@@ -273,6 +288,7 @@ void SecondMenuOptions(short curPos)
         WHITE_BACKGROUND;
         std::cout << "[SEM]\n";
         BLACK_BACKGROUND;
+        std::cout << "[Return]\n";
         std::cout << "[EXIT]\n";
         break;
     case 4:
@@ -280,6 +296,17 @@ void SecondMenuOptions(short curPos)
         std::cout << "[Hex]\n";
         std::cout << "[Binary]\n";
         std::cout << "[SEM]\n";
+        WHITE_BACKGROUND;
+        std::cout << "[Return]\n";
+        BLACK_BACKGROUND;
+        std::cout << "[EXIT]\n";
+        break;
+    case 5:
+        std::cout << "[Floating point]\n";
+        std::cout << "[Hex]\n";
+        std::cout << "[Binary]\n";
+        std::cout << "[SEM]\n";
+        std::cout << "[Return]\n";
         WHITE_BACKGROUND;
         std::cout << "[EXIT]\n";
         BLACK_BACKGROUND;
