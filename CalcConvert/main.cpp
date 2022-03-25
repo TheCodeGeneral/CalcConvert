@@ -5,9 +5,9 @@
 #define WHITE_BACKGROUND SetConsoleTextAttribute(hCon, (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE) | FOREGROUND_RED & FOREGROUND_GREEN & FOREGROUND_BLUE)
 #define BLACK_BACKGROUND SetConsoleTextAttribute(hCon, (BACKGROUND_RED & BACKGROUND_GREEN & BACKGROUND_BLUE) | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
 
-short MainMenu();
-void SingleNumber();
-void DoubleNumber();
+void MainMenu();
+bool SingleNumber();
+bool DoubleNumber();
 void get_hex();
 void MainMenuOptions(short curPos);
 void SecondMenuOptions(short curPos);
@@ -25,24 +25,12 @@ int main()
     cursorInfo.bVisible = false;
     SetConsoleCursorInfo(hCon, &cursorInfo);
 
-    switch (MainMenu())
-    {
-    case 0:
-        // Single number input
-        SingleNumber();
-        break;
-    case 1:
-        // 2 Number input
-        DoubleNumber();
-        break;
-    case 2:
-        // Exit
-        break;
-    }
+    MainMenu();
+
     return 0;
 }
 
-short MainMenu()
+void MainMenu()
 {
     bool doLoop = true;
     short curPos = 0;
@@ -57,8 +45,20 @@ short MainMenu()
             {
             case 0:
                 // Single number input
+                if (SingleNumber() == true)
+                    MainMenuOptions(curPos);
+                else
+                    doLoop = !doLoop;
+
+                break;
             case 1:
                 // 2 Number input
+                if (DoubleNumber() == true)
+                    MainMenuOptions(curPos);
+                else
+                    doLoop = !doLoop;
+
+                break;
             case 2:
                 // Exit
                 system("cls");
@@ -70,7 +70,6 @@ short MainMenu()
         {
             if (curPos == 0 || curPos == 1)
             {
-                system("cls");
                 MainMenuOptions(++curPos);
             }
         }
@@ -78,17 +77,15 @@ short MainMenu()
         {
             if (curPos == 1 || curPos == 2)
             {
-                system("cls");
                 MainMenuOptions(--curPos);
             }
         }
         Sleep(10);
     }
-    system("cls");
-    return curPos;
 }
 
-void SingleNumber()
+// returns true when returning to main menu
+bool SingleNumber()
 {
     bool doLoop = true;
     short curPos = 0;
@@ -107,7 +104,6 @@ void SingleNumber()
                 break;
             case 1:
                 // Hex
-                system("cls");
                 get_hex();
                 Sleep(1000);
                 doLoop = !doLoop;
@@ -122,9 +118,7 @@ void SingleNumber()
                 break;
             case 4:
                 //Return
-                system("cls");
-                MainMenu();
-                doLoop = !doLoop;
+                return true;
                 break;
             case 5:
                 // Exit
@@ -136,7 +130,6 @@ void SingleNumber()
         {
             if (curPos >= 0 && curPos < 5)
             {
-                system("cls");
                 SecondMenuOptions(++curPos);
             }
         }
@@ -144,14 +137,16 @@ void SingleNumber()
         {
             if (curPos > 0 && curPos <= 5)
             {
-                system("cls");
                 SecondMenuOptions(--curPos);
             }
         }
         Sleep(10);
     }
+    return false;
 }
-void DoubleNumber()
+
+// returns true when returning to main menu
+bool DoubleNumber()
 {
     bool doLoop = true;
     short curPos = 0;
@@ -182,8 +177,7 @@ void DoubleNumber()
                 break;
             case 4:
                 //return
-                system("cls");
-                MainMenu();
+                return true;
                 doLoop = !doLoop;
                 break;
             case 5:
@@ -196,7 +190,6 @@ void DoubleNumber()
         {
             if (curPos >= 0 && curPos < 5)
             {
-                system("cls");
                 SecondMenuOptions(++curPos);
             }
         }
@@ -204,7 +197,6 @@ void DoubleNumber()
         {
             if (curPos > 0 && curPos <= 5)
             {
-                system("cls");
                 SecondMenuOptions(--curPos);
             }
         }
@@ -214,6 +206,7 @@ void DoubleNumber()
 
 void MainMenuOptions(short curPos)
 {
+    system("cls");
     std::cout << "\t\tCalc Convert\n\nSelect Number of Inputs\n\n";
     switch (curPos)
     {
@@ -247,6 +240,7 @@ void MainMenuOptions(short curPos)
 
 void SecondMenuOptions(short curPos)
 {
+    system("cls");
     std::cout << "\t\tCalc Convert\n\nSelect Input Type\n\n";
     // Print menu options
     switch (curPos)
@@ -318,6 +312,7 @@ void SecondMenuOptions(short curPos)
 
 void get_hex()
 {
+    system("cls");
     std::cout << "Please enter a valid Hexadecimal number" << std::endl;
     std::string input;
     std::cin >> input;
