@@ -1,37 +1,20 @@
 #include "ValueConvert.h"
-#include <algorithm>
-#include <cctype>
-#include <complex>
-#include <cstddef>
-#include <iostream>
-#include <iomanip>
-#include <bitset>
-#include <iterator>
-#include <locale>
-#include <ostream>
-#include <string>
-#include <cmath>
-#include <map>
-#include <utility>
-//#include <bits/stdc++.h>
-#include <valarray>
 
 namespace VC
 {
-    float cast_to_float(std::string f_test);
-
-    void FloatToBinary(float f)
+    std::string FloatToBinary(float f)
     {
-        std::cout << std::bitset<sizeof f * 8>(*(long unsigned int*)(&f)) << std::endl;
+        return std::bitset<sizeof f * 8>(*(long unsigned int*)(&f)).to_string();
     }
 
     void FloatToHex(float f)
     {
+        std::string hex{};
         union float_bytes {
             float f;
             char  b[sizeof(float)];
         };
-        union float_bytes fb = { 1.1f };
+        union float_bytes fb = { f };
         for (int i = sizeof(float) - 1; i >= 0; --i)
             printf("%hhx ", fb.b[i]);
     }

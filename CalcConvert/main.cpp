@@ -9,6 +9,8 @@ short MainMenu();
 void SingleNumber();
 void DoubleNumber();
 void get_hex();
+void MainMenuOptions(short curPos);
+void SecondMenuOptions(short curPos);
 
 HANDLE hCon;
 int main()
@@ -44,46 +46,10 @@ short MainMenu()
 {
     bool doLoop = true;
     short curPos = 0;
-    bool key_was_pressed = true;
+    MainMenuOptions(curPos);
 
     while (doLoop)
     {
-        if(key_was_pressed == true)
-        {
-            system("cls");
-            std::cout << "\t\tCalc Convert\n\nSelect Number of Inputs\n\n";
-            // Print menu options
-            switch (curPos)
-            {
-            case 0:
-                WHITE_BACKGROUND;
-                std::cout << "[Input Single Number]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[Calculate 2 Numbers]\n";
-                std::cout << "[EXIT]\n";
-                break;
-            case 1:
-                BLACK_BACKGROUND;
-                std::cout << "[Input Single Number]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[Calculate 2 Numbers]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[EXIT]\n";
-                break;
-            case 2:
-                BLACK_BACKGROUND;
-                std::cout << "[Input Single Number]\n";
-                std::cout << "[Calculate 2 Numbers]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[EXIT]\n";
-                BLACK_BACKGROUND;
-                break;
-            default:
-                std::cout << "\n\nYou dun goofed somehow\n\n";
-            }
-            key_was_pressed = false;
-        }
-        key_was_pressed = false;
         // Get user input
         if (GetAsyncKeyState(VK_RETURN) & 0x1)
         {
@@ -104,88 +70,32 @@ short MainMenu()
         {
             if (curPos == 0 || curPos == 1)
             {
-                ++curPos;
+                system("cls");
+                MainMenuOptions(++curPos);
             }
-            key_was_pressed = true;
         }
         else if (GetAsyncKeyState(VK_UP) & 0x1)
         {
             if (curPos == 1 || curPos == 2)
             {
-                --curPos;
+                system("cls");
+                MainMenuOptions(--curPos);
             }
-            key_was_pressed = true;
         }
         Sleep(10);
     }
+    system("cls");
     return curPos;
 }
+
 void SingleNumber()
 {
     bool doLoop = true;
     short curPos = 0;
-    bool key_was_pressed = true;
+    SecondMenuOptions(curPos);
 
     while (doLoop)
-    {
-        if (key_was_pressed)
-        {
-            system("cls");
-            std::cout << "\t\tCalc Convert\n\nSelect Input Type\n\n";
-            // Print menu options
-            switch (curPos)
-            {
-            case 0:
-                WHITE_BACKGROUND;
-                std::cout << "[Floating point]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[Hex]\n";
-                std::cout << "[Binary]\n";
-                std::cout << "[SEM]\n";
-                std::cout << "[EXIT]\n";
-                break;
-            case 1:
-                std::cout << "[Floating point]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[Hex]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[Binary]\n";
-                std::cout << "[SEM]\n";
-                std::cout << "[EXIT]\n";
-                break;
-            case 2:
-                std::cout << "[Floating point]\n";
-                std::cout << "[Hex]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[Binary]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[SEM]\n";
-                std::cout << "[EXIT]\n";
-                break;
-            case 3:
-                std::cout << "[Floating point]\n";
-                std::cout << "[Hex]\n";
-                std::cout << "[Binary]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[SEM]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[EXIT]\n";
-                break;
-            case 4:
-                std::cout << "[Floating point]\n";
-                std::cout << "[Hex]\n";
-                std::cout << "[Binary]\n";
-                std::cout << "[SEM]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[EXIT]\n";
-                BLACK_BACKGROUND;
-                break;
-            default:
-                std::cout << "\n\nYou dun goofed somehow\n\n";
-            }
-            key_was_pressed = false;
-        }
-        
+    {        
         // Get user input
         if (GetAsyncKeyState(VK_RETURN) & 0x1)
         {
@@ -220,17 +130,17 @@ void SingleNumber()
         {
             if (curPos >= 0 && curPos < 4)
             {
-                ++curPos;
+                system("cls");
+                SecondMenuOptions(++curPos);
             }
-            key_was_pressed = true;
         }
         else if (GetAsyncKeyState(VK_UP) & 0x1)
         {
             if (curPos > 0 && curPos <= 4)
             {
-                --curPos;
+                system("cls");
+                SecondMenuOptions(--curPos);
             }
-            key_was_pressed = true;
         }
         Sleep(10);
     }
@@ -239,68 +149,10 @@ void DoubleNumber()
 {
     bool doLoop = true;
     short curPos = 0;
-    bool key_was_pressed = true;
+    SecondMenuOptions(curPos);
 
     while (doLoop)
     {
-        if (key_was_pressed)
-        {
-            system("cls");
-            std::cout << "\t\tCalc Convert\n\nSelect Input Type\n\n";
-            // Print menu options
-            switch (curPos)
-            {
-            case 0:
-                WHITE_BACKGROUND;
-                std::cout << "[Floating point]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[Hex]\n";
-                std::cout << "[Binary]\n";
-                std::cout << "[SEM]\n";
-                std::cout << "[EXIT]\n";
-                break;
-            case 1:
-                std::cout << "[Floating point]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[Hex]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[Binary]\n";
-                std::cout << "[SEM]\n";
-                std::cout << "[EXIT]\n";
-                break;
-            case 2:
-                std::cout << "[Floating point]\n";
-                std::cout << "[Hex]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[Binary]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[SEM]\n";
-                std::cout << "[EXIT]\n";
-                break;
-            case 3:
-                std::cout << "[Floating point]\n";
-                std::cout << "[Hex]\n";
-                std::cout << "[Binary]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[SEM]\n";
-                BLACK_BACKGROUND;
-                std::cout << "[EXIT]\n";
-                break;
-            case 4:
-                std::cout << "[Floating point]\n";
-                std::cout << "[Hex]\n";
-                std::cout << "[Binary]\n";
-                std::cout << "[SEM]\n";
-                WHITE_BACKGROUND;
-                std::cout << "[EXIT]\n";
-                BLACK_BACKGROUND;
-                break;
-            default:
-                std::cout << "\n\nYou dun goofed somehow\n\n";
-            }
-            key_was_pressed = false;
-        }
-        
         // Get user input
         if (GetAsyncKeyState(VK_RETURN) & 0x1)
         {
@@ -327,25 +179,113 @@ void DoubleNumber()
                 doLoop = !doLoop;
                 break;
             }
-            key_was_pressed = true;
         }
         else if (GetAsyncKeyState(VK_DOWN) & 0x1)
         {
             if (curPos >= 0 && curPos < 4)
             {
-                ++curPos;
+                system("cls");
+                SecondMenuOptions(++curPos);
             }
-            key_was_pressed = true;
         }
         else if (GetAsyncKeyState(VK_UP) & 0x1)
         {
             if (curPos > 0 && curPos <= 4)
             {
-                --curPos;
+                system("cls");
+                SecondMenuOptions(--curPos);
             }
-            key_was_pressed = true;
         }
         Sleep(10);
+    }
+}
+
+void MainMenuOptions(short curPos)
+{
+    std::cout << "\t\tCalc Convert\n\nSelect Number of Inputs\n\n";
+    switch (curPos)
+    {
+    case 0:
+        WHITE_BACKGROUND;
+        std::cout << "[Input Single Number]\n";
+        BLACK_BACKGROUND;
+        std::cout << "[Calculate 2 Numbers]\n";
+        std::cout << "[EXIT]\n";
+        break;
+    case 1:
+        BLACK_BACKGROUND;
+        std::cout << "[Input Single Number]\n";
+        WHITE_BACKGROUND;
+        std::cout << "[Calculate 2 Numbers]\n";
+        BLACK_BACKGROUND;
+        std::cout << "[EXIT]\n";
+        break;
+    case 2:
+        BLACK_BACKGROUND;
+        std::cout << "[Input Single Number]\n";
+        std::cout << "[Calculate 2 Numbers]\n";
+        WHITE_BACKGROUND;
+        std::cout << "[EXIT]\n";
+        BLACK_BACKGROUND;
+        break;
+    default:
+        std::cout << "\n\nYou dun goofed somehow\n\n";
+    }
+}
+
+void SecondMenuOptions(short curPos)
+{
+    std::cout << "\t\tCalc Convert\n\nSelect Input Type\n\n";
+    // Print menu options
+    switch (curPos)
+    {
+    case 0:
+        WHITE_BACKGROUND;
+        std::cout << "[Floating point]\n";
+        BLACK_BACKGROUND;
+        std::cout << "[Hex]\n";
+        std::cout << "[Binary]\n";
+        std::cout << "[SEM]\n";
+        std::cout << "[EXIT]\n";
+        break;
+    case 1:
+        std::cout << "[Floating point]\n";
+        WHITE_BACKGROUND;
+        std::cout << "[Hex]\n";
+        BLACK_BACKGROUND;
+        std::cout << "[Binary]\n";
+        std::cout << "[SEM]\n";
+        std::cout << "[EXIT]\n";
+        break;
+    case 2:
+        std::cout << "[Floating point]\n";
+        std::cout << "[Hex]\n";
+        WHITE_BACKGROUND;
+        std::cout << "[Binary]\n";
+        BLACK_BACKGROUND;
+        std::cout << "[SEM]\n";
+        std::cout << "[EXIT]\n";
+        break;
+    case 3:
+        std::cout << "[Floating point]\n";
+        std::cout << "[Hex]\n";
+        std::cout << "[Binary]\n";
+        WHITE_BACKGROUND;
+        std::cout << "[SEM]\n";
+        BLACK_BACKGROUND;
+        std::cout << "[EXIT]\n";
+        break;
+    case 4:
+        std::cout << "[Floating point]\n";
+        std::cout << "[Hex]\n";
+        std::cout << "[Binary]\n";
+        std::cout << "[SEM]\n";
+        WHITE_BACKGROUND;
+        std::cout << "[EXIT]\n";
+        BLACK_BACKGROUND;
+        break;
+    default:
+        std::cout << "\n\nYou dun goofed somehow\n\n";
     }
 }
 
