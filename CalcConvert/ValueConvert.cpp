@@ -7,16 +7,21 @@ namespace VC
         return std::bitset<sizeof f * 8>(*(long unsigned int*)(&f)).to_string();
     }
 
-    void FloatToHex(float f)
+    std::string FloatToHex(float f)
     {
-        std::string hex{};
         union float_bytes {
             float f;
             char  b[sizeof(float)];
         };
         union float_bytes fb = { f };
+        std::stringstream stream;
+        stream << std::hex << std::setfill('0');
+
+
         for (int i = sizeof(float) - 1; i >= 0; --i)
-            printf("%hhx ", fb.b[i]);
+            stream << std::setw(2) << (fb.b[i] & 0xFF);
+
+        return stream.str();
     }
 
 
