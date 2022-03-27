@@ -203,6 +203,7 @@ bool DoubleNumber()
         }
         Sleep(10);
     }
+    return false;
 }
 
 void MainMenuOptions(short curPos)
