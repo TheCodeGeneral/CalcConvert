@@ -178,7 +178,7 @@ bool DoubleNumber()
                 break;
             case 4:
                 //return
-                return true;
+                MainMenu();
                 doLoop = !doLoop;
                 break;
             case 5:
