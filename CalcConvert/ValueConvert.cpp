@@ -15,7 +15,7 @@ namespace VC
         };
         union float_bytes fb = { f };
         std::stringstream stream;
-        stream << std::hex << std::setfill('0');
+        stream << std::hex << std::setfill('0') << "0x";
 
 
         for (int i = sizeof(float) - 1; i >= 0; --i)

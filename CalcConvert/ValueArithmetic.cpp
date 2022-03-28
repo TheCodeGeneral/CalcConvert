@@ -18,31 +18,44 @@ namespace VA
 		return f1 / f2;
 	}
 
-	std::string AND(std::string h1, std::string h2)
+	std::string AND(std::string op1, std::string op2)
 	{
 		return "Not Implemented";
 	}
-	std::string NOT(std::string h1, std::string h2)
+	std::string NOT(std::string input)
+	{
+		// Check if hex or binary
+		std::string result{};
+		if (input[1] == 'x')
+		{
+			// convert to binary to make it easier
+			input = VC::hex_to_binary(input);
+		}
+
+		for(int i = 0; i < input.size(); ++i)
+		{
+			result.push_back(input[i] == '0' ? '1' : '0');
+		}
+
+		return result;
+	}
+	std::string OR(std::string op1, std::string op2)
 	{
 		return "Not Implemented";
 	}
-	std::string OR(std::string h1, std::string h2)
+	std::string NOR(std::string op1, std::string op2)
+	{
+		return NOT(OR(op1, op2));
+	}
+	std::string XOR(std::string op1, std::string op2)
 	{
 		return "Not Implemented";
 	}
-	std::string NOR(std::string h1, std::string h2)
+	std::string SHR(std::string op1, std::string op2)
 	{
 		return "Not Implemented";
 	}
-	std::string XOR(std::string h1, std::string h2)
-	{
-		return "Not Implemented";
-	}
-	std::string SHR(std::string h1, std::string h2)
-	{
-		return "Not Implemented";
-	}
-	std::string SHL(std::string h1, std::string h2)
+	std::string SHL(std::string op1, std::string op2)
 	{
 		return "Not Implemented";
 	}
