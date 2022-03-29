@@ -10,6 +10,9 @@ void MainMenu();
 bool SingleNumber();
 bool DoubleNumber();
 void get_hex();
+void get_binary();
+void get_float();
+void get_SEM();
 void MainMenuOptions(short curPos);
 void SecondMenuOptions(short curPos);
 
@@ -111,6 +114,7 @@ bool SingleNumber()
                 break;
             case 2:
                 // Binary
+                get_binary();
                 doLoop = !doLoop;
                 break;
             case 3:
@@ -170,6 +174,7 @@ bool DoubleNumber()
                 break;
             case 2:
                 // Binary
+                get_binary();
                 doLoop = !doLoop;
                 break;
             case 3:
@@ -323,5 +328,26 @@ void get_hex()
     std::cout << "SEM:\t";
     VC::hex_to_SEM(input);
     std::cout << "\nFloat:\t" << VC::hex_to_float(input) << std::endl;
+
+}
+void get_binary()
+{
+    system("cls");
+    std::cout << "Please enter a valid Binary Number" << std::endl;
+    std::bitset<32> input;
+    std::cin >> input;
+    std::cout << "Binary:\t" << input << std::endl;
+    std::cout << "Hex:\t" << VC::binary_to_hex(input) << std::endl;
+    std::cout << "Float:\t" << VC::hex_to_float(VC::binary_to_hex(input)) << std::endl;// Does not OutPut Correct values OutPut:=0.00000
+    std::cout << "SEM:\t";
+    VC::binary_to_SEM(input);
+
+}
+void get_float() {
+
+
+
+}
+void get_SEM() {
 
 }
