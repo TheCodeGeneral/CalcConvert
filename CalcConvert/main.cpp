@@ -84,6 +84,29 @@ void MainMenu()
                 MainMenuOptions(--curPos);
             }
         }
+        if ((GetAsyncKeyState(0x31) | GetAsyncKeyState(VK_NUMPAD1)) & 0x1)
+        {
+            // Single number input
+            if (SingleNumber() == true)
+                MainMenuOptions(curPos);
+            else
+                doLoop = !doLoop;
+        }
+        else if ((GetAsyncKeyState(0x32) | GetAsyncKeyState(VK_NUMPAD2)) & 0x1)
+        {
+            // 2 Number input
+            if (DoubleNumber() == true)
+                MainMenuOptions(curPos);
+            else
+                doLoop = !doLoop;
+        }
+        else if ((GetAsyncKeyState(0x33) | GetAsyncKeyState(VK_NUMPAD3)) & 0x1)
+        {
+            // Exit
+            system("cls");
+            doLoop = !doLoop;
+        }
+
         Sleep(10);
     }
 }
@@ -145,6 +168,34 @@ bool SingleNumber()
                 SecondMenuOptions(--curPos);
             }
         }
+
+        if ((GetAsyncKeyState(0x31) | GetAsyncKeyState(VK_NUMPAD1)) & 0x1)
+        {
+            // floating point
+        }
+        else if ((GetAsyncKeyState(0x32) | GetAsyncKeyState(VK_NUMPAD2)) & 0x1)
+        {
+            // Hex
+        }
+        else if ((GetAsyncKeyState(0x33) | GetAsyncKeyState(VK_NUMPAD3)) & 0x1)
+        {
+            // Binary
+        }
+        else if ((GetAsyncKeyState(0x34) | GetAsyncKeyState(VK_NUMPAD4)) & 0x1)
+        {
+            // SEM
+        }
+        else if ((GetAsyncKeyState(0x35) | GetAsyncKeyState(VK_NUMPAD5)) & 0x1)
+        {
+            // Return
+            return true;
+        }
+        else if ((GetAsyncKeyState(0x36) | GetAsyncKeyState(VK_NUMPAD6)) & 0x1)
+        {
+            return false;
+            // Exit
+        }
+
         Sleep(10);
     }
     return false;
@@ -206,6 +257,32 @@ bool DoubleNumber()
                 SecondMenuOptions(--curPos);
             }
         }
+        if ((GetAsyncKeyState(0x31) | GetAsyncKeyState(VK_NUMPAD1)) & 0x1)
+        {
+            // floating point
+        }
+        else if ((GetAsyncKeyState(0x32) | GetAsyncKeyState(VK_NUMPAD2)) & 0x1)
+        {
+            // Hex
+        }
+        else if ((GetAsyncKeyState(0x33) | GetAsyncKeyState(VK_NUMPAD3)) & 0x1)
+        {
+            // Binary
+        }
+        else if ((GetAsyncKeyState(0x34) | GetAsyncKeyState(VK_NUMPAD4)) & 0x1)
+        {
+            // SEM
+        }
+        else if ((GetAsyncKeyState(0x35) | GetAsyncKeyState(VK_NUMPAD5)) & 0x1)
+        {
+            // Return
+            return true;
+        }
+        else if ((GetAsyncKeyState(0x36) | GetAsyncKeyState(VK_NUMPAD6)) & 0x1)
+        {
+            return false;
+            // Exit
+        }
         Sleep(10);
     }
     return false;
@@ -218,24 +295,25 @@ void MainMenuOptions(short curPos)
     switch (curPos)
     {
     case 0:
+        std::cout << "1.   ";
         WHITE_BACKGROUND;
         std::cout << "[Input Single Number]\n";
         BLACK_BACKGROUND;
-        std::cout << "[Calculate 2 Numbers]\n";
-        std::cout << "[EXIT]\n";
+        std::cout << "2.   [Calculate 2 Numbers]\n";
+        std::cout << "3.   [EXIT]\n";
         break;
     case 1:
         BLACK_BACKGROUND;
-        std::cout << "[Input Single Number]\n";
+        std::cout << "1.   [Input Single Number]\n2.   ";
         WHITE_BACKGROUND;
         std::cout << "[Calculate 2 Numbers]\n";
         BLACK_BACKGROUND;
-        std::cout << "[EXIT]\n";
+        std::cout << "3.   [EXIT]\n";
         break;
     case 2:
         BLACK_BACKGROUND;
-        std::cout << "[Input Single Number]\n";
-        std::cout << "[Calculate 2 Numbers]\n";
+        std::cout << "1.   [Input Single Number]\n";
+        std::cout << "2.   [Calculate 2 Numbers]\n3.   ";
         WHITE_BACKGROUND;
         std::cout << "[EXIT]\n";
         BLACK_BACKGROUND;
@@ -253,61 +331,62 @@ void SecondMenuOptions(short curPos)
     switch (curPos)
     {
     case 0:
+        std::cout << "1.   ";
         WHITE_BACKGROUND;
         std::cout << "[Floating point]\n";
         BLACK_BACKGROUND;
-        std::cout << "[Hex]\n";
-        std::cout << "[Binary]\n";
-        std::cout << "[SEM]\n";
-        std::cout << "[Return]\n";
-        std::cout << "[EXIT]\n";
+        std::cout << "2.   [Hex]\n";
+        std::cout << "3.   [Binary]\n";
+        std::cout << "4.   [SEM]\n";
+        std::cout << "5.   [Return]\n";
+        std::cout << "6.   [EXIT]\n";
         break;
     case 1:
-        std::cout << "[Floating point]\n";
+        std::cout << "1.   [Floating point]\n2.   ";
         WHITE_BACKGROUND;
         std::cout << "[Hex]\n";
         BLACK_BACKGROUND;
-        std::cout << "[Binary]\n";
-        std::cout << "[SEM]\n";
-        std::cout << "[Return]\n";
-        std::cout << "[EXIT]\n";
+        std::cout << "3.   [Binary]\n";
+        std::cout << "4.   [SEM]\n";
+        std::cout << "5.   [Return]\n";
+        std::cout << "6.   [EXIT]\n";
         break;
     case 2:
-        std::cout << "[Floating point]\n";
-        std::cout << "[Hex]\n";
+        std::cout << "1.   [Floating point]\n";
+        std::cout << "2.   [Hex]\n3.   ";
         WHITE_BACKGROUND;
         std::cout << "[Binary]\n";
         BLACK_BACKGROUND;
-        std::cout << "[SEM]\n";
-        std::cout << "[Return]\n";
-        std::cout << "[EXIT]\n";
+        std::cout << "4.   [SEM]\n";
+        std::cout << "5.   [Return]\n";
+        std::cout << "6.   [EXIT]\n";
         break;
     case 3:
-        std::cout << "[Floating point]\n";
-        std::cout << "[Hex]\n";
-        std::cout << "[Binary]\n";
+        std::cout << "1.   [Floating point]\n";
+        std::cout << "2.   [Hex]\n";
+        std::cout << "3.   [Binary]\n4.   ";
         WHITE_BACKGROUND;
         std::cout << "[SEM]\n";
         BLACK_BACKGROUND;
-        std::cout << "[Return]\n";
-        std::cout << "[EXIT]\n";
+        std::cout << "5.   [Return]\n";
+        std::cout << "6.   [EXIT]\n";
         break;
     case 4:
-        std::cout << "[Floating point]\n";
-        std::cout << "[Hex]\n";
-        std::cout << "[Binary]\n";
-        std::cout << "[SEM]\n";
+        std::cout << "1.   [Floating point]\n";
+        std::cout << "2.   [Hex]\n";
+        std::cout << "3.   [Binary]\n";
+        std::cout << "4.   [SEM]\n5.   ";
         WHITE_BACKGROUND;
         std::cout << "[Return]\n";
         BLACK_BACKGROUND;
-        std::cout << "[EXIT]\n";
+        std::cout << "6.   [EXIT]\n";
         break;
     case 5:
-        std::cout << "[Floating point]\n";
-        std::cout << "[Hex]\n";
-        std::cout << "[Binary]\n";
-        std::cout << "[SEM]\n";
-        std::cout << "[Return]\n";
+        std::cout << "1.   [Floating point]\n";
+        std::cout << "2.   [Hex]\n";
+        std::cout << "3.   [Binary]\n";
+        std::cout << "4.   [SEM]\n";
+        std::cout << "5.   [Return]\n6.   ";
         WHITE_BACKGROUND;
         std::cout << "[EXIT]\n";
         BLACK_BACKGROUND;

@@ -15,7 +15,7 @@ namespace VC
         };
         union float_bytes fb = { f };
         std::stringstream stream;
-        stream << std::hex << std::setfill('0');
+        stream << std::hex << std::setfill('0') << "0x";
 
 
         for (int i = sizeof(float) - 1; i >= 0; --i)
@@ -24,6 +24,15 @@ namespace VC
         return stream.str();
     }
 
+    float BinaryToFloat(std::bitset<32> input)
+    {
+        union long_float
+        {
+            unsigned long in;
+            float out;
+        };
+        return long_float { input.to_ulong() }.out;
+    }
 
     std::string binary_to_float(std::bitset<32> input)
     {
