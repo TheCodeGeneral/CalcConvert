@@ -22,7 +22,7 @@ namespace VC
 {
     std::string FloatToBinary(float f);
     std::string FloatToHex(float f);
-
+    float BinaryToFloat(std::bitset<32> input);
     std::string binary_to_float(std::bitset<32> input);
     void binary_to_SEM(std::bitset<32> input);
     std::string binary_to_hex(std::bitset<32> input);
