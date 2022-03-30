@@ -26,10 +26,12 @@ namespace VA
 	{
 		// Check if hex or binary
 		std::string result{};
+		bool isHex = false;
 		if (input[1] == 'x')
 		{
 			// convert to binary to make it easier
 			input = VC::hex_to_binary(input);
+			isHex = true;
 		}
 
 		for(int i = 0; i < input.size(); ++i)
@@ -37,6 +39,8 @@ namespace VA
 			result.push_back(input[i] == '0' ? '1' : '0');
 		}
 
+		if (isHex)
+			return VC::binary_to_hex((std::bitset<32>{result}));
 		return result;
 	}
 	std::string OR(std::string op1, std::string op2)

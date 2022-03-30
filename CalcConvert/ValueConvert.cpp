@@ -19,7 +19,7 @@ namespace VC
 
 
         for (int i = sizeof(float) - 1; i >= 0; --i)
-            stream << std::setw(2) << (fb.b[i] & 0xFF);
+            stream << std::setw(2) << std::toupper(fb.b[i] & 0xFF);
 
         return stream.str();
     }
@@ -125,7 +125,7 @@ namespace VC
         it = hex_value.find(temp);
         output.append(it->second);
         hex_value.clear();
-        return output;
+        return "0x" + output;
     }
 
     std::string hex_to_binary(std::string input)
@@ -149,7 +149,7 @@ namespace VC
         binary_value.insert(std::pair<std::string, std::string>("E", "1110"));
         binary_value.insert(std::pair<std::string, std::string>("F", "1111"));
         std::map<std::string, std::string>::iterator it;
-
+        input.replace(0, 2, "");
         for(char &c: input)
         {
             /*TODO: Implement try catch for value not in map.*/
@@ -164,12 +164,9 @@ namespace VC
         return output;
     }
 
-    std::string hex_to_float(std::string input)
+    float hex_to_float(std::string input)
     {
-        std::string output;
-        std::bitset<32> temp(hex_to_binary(input));
-        output = binary_to_float(temp);
-        return output;
+        return BinaryToFloat(std::bitset<32> {hex_to_binary(input)});
     }
 
     void hex_to_SEM(std::string input)

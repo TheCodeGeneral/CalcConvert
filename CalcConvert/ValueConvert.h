@@ -28,7 +28,7 @@ namespace VC
     std::string binary_to_hex(std::bitset<32> input);
     
     std::string hex_to_binary(std::string input);
-    std::string hex_to_float(std::string input);
+    float hex_to_float(std::string input);
     void hex_to_SEM(std::string input);
     float cast_to_float(std::string f_test);
     //void HexToInt();
