@@ -56,7 +56,7 @@ namespace UnitTests
 		TEST_METHOD(Not)
 		{
 			Assert::AreEqual(static_cast<std::string>("00000000000000000000000000000000"), VA::NOT("11111111111111111111111111111111"));
-			Assert::AreEqual(static_cast<std::string>("0x00000000"), VA::NOT("0x11111111"));
+			Assert::AreEqual(static_cast<std::string>("0xEEEEEEEE"), VA::NOT("0x11111111"));
 		}
 		TEST_METHOD(Xor)
 		{
