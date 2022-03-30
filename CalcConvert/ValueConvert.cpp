@@ -23,7 +23,15 @@ namespace VC
 
         return stream.str();
     }
-
+    std::string BinaryToSEM(std::string input)
+    {
+        return input.substr(0, 1) + " " + input.substr(1, 8) + " " + input.substr(9, input.size());
+    }
+    std::string SEM_to_binary(std::string input)
+    {
+        input.erase(std::remove(input.begin(), input.end(), ' '), input.end());
+        return input;
+    }
     float BinaryToFloat(std::bitset<32> input)
     {
         union long_float
