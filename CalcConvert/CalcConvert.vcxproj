@@ -142,6 +142,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ValueArithmetic.cpp" />
     <ClCompile Include="ValueConvert.cpp" />
+    <ClCompile Include="Values.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="tasks.txt" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="ValueArithmetic.h" />
     <ClInclude Include="ValueConvert.h" />
+    <ClInclude Include="Values.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
