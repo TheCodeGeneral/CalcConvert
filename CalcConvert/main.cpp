@@ -42,6 +42,8 @@ void MainMenu()
         // Get user input
         if (GetAsyncKeyState(VK_RETURN) & 0x1)
         {
+            std::string discard{};
+            std::getline(std::cin, discard);
             switch (curPos)
             {
             case 0:
@@ -84,24 +86,18 @@ void MainMenu()
         if ((GetAsyncKeyState(0x31) | GetAsyncKeyState(VK_NUMPAD1)) & 0x1)
         {
             // Single number input
-            if (SingleNumber() == true)
-                MainMenuOptions(curPos);
-            else
-                doLoop = !doLoop;
+            MainMenuOptions(curPos = 0);
+            
         }
         else if ((GetAsyncKeyState(0x32) | GetAsyncKeyState(VK_NUMPAD2)) & 0x1)
         {
             // 2 Number input
-            if (DoubleNumber() == true)
-                MainMenuOptions(curPos);
-            else
-                doLoop = !doLoop;
+            MainMenuOptions(curPos = 1);
         }
         else if ((GetAsyncKeyState(0x33) | GetAsyncKeyState(VK_NUMPAD3)) & 0x1)
         {
             // Exit
-            system("cls");
-            doLoop = !doLoop;
+            MainMenuOptions(curPos = 3);
         }
 
         Sleep(10);
@@ -120,6 +116,8 @@ bool SingleNumber()
         // Get user input
         if (GetAsyncKeyState(VK_RETURN) & 0x1)
         {
+            std::string discard{};
+            std::getline(std::cin, discard);
             switch (curPos)
             {
             case 0:
@@ -167,28 +165,34 @@ bool SingleNumber()
 
         if ((GetAsyncKeyState(0x31) | GetAsyncKeyState(VK_NUMPAD1)) & 0x1)
         {
+            SecondMenuOptions(curPos = 0);
             // floating point
         }
         else if ((GetAsyncKeyState(0x32) | GetAsyncKeyState(VK_NUMPAD2)) & 0x1)
         {
+            SecondMenuOptions(curPos = 1);
             // Hex
         }
         else if ((GetAsyncKeyState(0x33) | GetAsyncKeyState(VK_NUMPAD3)) & 0x1)
         {
+            SecondMenuOptions(curPos = 2);
             // Binary
         }
         else if ((GetAsyncKeyState(0x34) | GetAsyncKeyState(VK_NUMPAD4)) & 0x1)
         {
+            SecondMenuOptions(curPos = 3);
             // SEM
         }
         else if ((GetAsyncKeyState(0x35) | GetAsyncKeyState(VK_NUMPAD5)) & 0x1)
         {
+            SecondMenuOptions(curPos = 4);
             // Return
-            return true;
+            //return true;
         }
         else if ((GetAsyncKeyState(0x36) | GetAsyncKeyState(VK_NUMPAD6)) & 0x1)
         {
-            return false;
+            SecondMenuOptions(curPos = 5);
+            //return false;
             // Exit
         }
 
@@ -209,6 +213,8 @@ bool DoubleNumber()
         // Get user input
         if (GetAsyncKeyState(VK_RETURN) & 0x1)
         {
+            std::string discard{};
+            std::getline(std::cin, discard);
             switch (curPos)
             {
             case 0:
@@ -234,6 +240,7 @@ bool DoubleNumber()
                 break;
             case 5:
                 // Exit
+                return false;
                 doLoop = !doLoop;
                 break;
             }
@@ -254,28 +261,34 @@ bool DoubleNumber()
         }
         if ((GetAsyncKeyState(0x31) | GetAsyncKeyState(VK_NUMPAD1)) & 0x1)
         {
+            SecondMenuOptions(curPos = 0);
             // floating point
         }
         else if ((GetAsyncKeyState(0x32) | GetAsyncKeyState(VK_NUMPAD2)) & 0x1)
         {
+            SecondMenuOptions(curPos = 1);
             // Hex
         }
         else if ((GetAsyncKeyState(0x33) | GetAsyncKeyState(VK_NUMPAD3)) & 0x1)
         {
+            SecondMenuOptions(curPos = 2);
             // Binary
         }
         else if ((GetAsyncKeyState(0x34) | GetAsyncKeyState(VK_NUMPAD4)) & 0x1)
         {
+            SecondMenuOptions(curPos = 3);
             // SEM
         }
         else if ((GetAsyncKeyState(0x35) | GetAsyncKeyState(VK_NUMPAD5)) & 0x1)
         {
+            SecondMenuOptions(curPos = 4);
             // Return
-            return true;
+            //return true;
         }
         else if ((GetAsyncKeyState(0x36) | GetAsyncKeyState(VK_NUMPAD6)) & 0x1)
         {
-            return false;
+            SecondMenuOptions(curPos = 5);
+            //return false;
             // Exit
         }
         Sleep(10);
@@ -394,13 +407,16 @@ void SecondMenuOptions(short curPos)
 void get_hex()
 {
     system("cls");
-    std::cout << "Please enter a valid Hexadecimal number" << std::endl;
+    std::cout << "Please enter a valid Hexadecimal number\n0x";
     std::string input;
+    
     std::cin >> input;
+    input = "0x" + input;
     std::cout << "Hex:\t" << input << std::endl;
     std::cout << "Binary:\t" << VC::hex_to_binary(input) << std::endl;
     std::cout << "SEM:\t";
     VC::hex_to_SEM(input);
     std::cout << "\nFloat:\t" << VC::hex_to_float(input) << std::endl;
 
+    system("pause");
 }
