@@ -97,7 +97,7 @@ void MainMenu()
         else if ((GetAsyncKeyState(0x33) | GetAsyncKeyState(VK_NUMPAD3)) & 0x1)
         {
             // Exit
-            MainMenuOptions(curPos = 3);
+            MainMenuOptions(curPos = 2);
         }
 
         Sleep(10);
