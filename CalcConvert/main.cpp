@@ -10,6 +10,7 @@ void MainMenu();
 bool SingleNumber();
 bool DoubleNumber();
 void get_hex();
+void get_binary();
 void MainMenuOptions(short curPos);
 void SecondMenuOptions(short curPos);
 
@@ -97,7 +98,7 @@ void MainMenu()
         else if ((GetAsyncKeyState(0x33) | GetAsyncKeyState(VK_NUMPAD3)) & 0x1)
         {
             // Exit
-            MainMenuOptions(curPos = 3);
+            MainMenuOptions(curPos = 2);
         }
 
         Sleep(10);
@@ -127,11 +128,11 @@ bool SingleNumber()
             case 1:
                 // Hex
                 get_hex();
-                Sleep(1000);
                 doLoop = !doLoop;
                 break;
             case 2:
                 // Binary
+                get_binary();
                 doLoop = !doLoop;
                 break;
             case 3:
@@ -198,7 +199,7 @@ bool SingleNumber()
 
         Sleep(10);
     }
-    return false;
+    return true;
 }
 
 // returns true when returning to main menu
@@ -412,11 +413,61 @@ void get_hex()
     
     std::cin >> input;
     input = "0x" + input;
-    std::cout << "Hex:\t" << input << std::endl;
-    std::cout << "Binary:\t" << VC::hex_to_binary(input) << std::endl;
-    std::cout << "SEM:\t";
-    VC::hex_to_SEM(input);
-    std::cout << "\nFloat:\t" << VC::hex_to_float(input) << std::endl;
+    bool valid_size = (input.size() == 10) ? true : false;
+    bool valid_chars = true;
+    for (int i = 0; i < input.size(); i++)
+    {
+        if (!(isdigit(input.at(i))) && !(std::toupper(input.at(i), std::locale()) == 'A' || std::toupper(input.at(i), std::locale()) == 'B' || std::toupper(input.at(i), std::locale()) == 'C' || std::toupper(input.at(i), std::locale()) == 'D' || std::toupper(input.at(i), std::locale()) == 'E' || std::toupper(input.at(i), std::locale()) == 'F' || std::toupper(input.at(i), std::locale()) == 'X'))
+        {
+            valid_chars = false;
+            break;
+        }
+    }
+    if (valid_size && valid_chars)
+    {
+        std::cout << "Hex:\t" << input << std::endl;
+        std::cout << "Binary:\t" << VC::hex_to_binary(input) << std::endl;
+        std::cout << "SEM:\t";
+        VC::hex_to_SEM(input);
+        std::cout << "\nFloat:\t" << VC::hex_to_float(input) << std::endl;
+    }
+    else 
+    {  
+        std::cout << "That is not a valid hexadecimal. Try again." << std::endl;
+    }
+    system("pause");
+}
+
+void get_binary()
+{
+    system("cls");
+    std::cout << "Please enter a valid 32 bit binary number\n=>";
+    std::string input;
+
+    std::cin >> input;
+    bool valid_size = (input.size() == 32) ? true : false;
+    bool valid_chars = true;
+    for (int i = 0; i < input.size(); i++)
+    {
+        if (!(input.at(i) == '0' || input.at(i) == '1'))
+        {
+            valid_chars = false;
+            break;
+        }
+    }
+
+    if (valid_size && valid_chars)
+    {
+        std::cout << "Binary:\t" << input << std::endl;
+        std::cout << "Hex:\t" << VC::binary_to_hex(std::bitset<32>(input)) << std::endl;
+        std::cout << "SEM:\t";
+        VC::binary_to_SEM(std::bitset<32>(input));
+        std::cout << "Float:\t" << VC::BinaryToFloat(std::bitset<32>(input)) << std::endl;
+    }
+    else
+    {
+        std::cout << "That is not a valid 32-bit binary. Try again." << std::endl;
+    }
 
     system("pause");
 }
