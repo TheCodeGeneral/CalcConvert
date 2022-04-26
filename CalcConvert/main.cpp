@@ -11,6 +11,7 @@ bool SingleNumber();
 bool DoubleNumber();
 void get_hex();
 void get_binary();
+void get_float();
 void MainMenuOptions(short curPos);
 void SecondMenuOptions(short curPos);
 
@@ -123,6 +124,7 @@ bool SingleNumber()
             {
             case 0:
                 // Flaoting Point
+                get_float();
                 doLoop = !doLoop;
                 break;
             case 1:
@@ -463,10 +465,44 @@ void get_binary()
         std::cout << "SEM:\t";
         VC::binary_to_SEM(std::bitset<32>(input));
         std::cout << "Float:\t" << VC::BinaryToFloat(std::bitset<32>(input)) << std::endl;
-    }
+    }   
     else
     {
         std::cout << "That is not a valid 32-bit binary. Try again." << std::endl;
+    }
+
+    system("pause");
+}
+
+void get_float()
+{
+    system("cls");
+    std::cout << "Please enter a valid floating point number\n=>";
+    std::string input;
+
+    std::cin >> input;
+    bool valid_chars = true;
+    for (int i = 0; i < input.size(); i++)
+    {
+        if (!(isdigit(input.at(i)) || input.at(i) == '-' || input.at(i) == '.' || input.at(i) == '+'))
+        {
+            valid_chars = false;
+            break;
+        }
+    }
+
+    if (valid_chars)
+    {
+        std::string binary_in = VC::FloatToBinary(std::stof(input));
+        std::cout << "Float:\t" << input << std::endl;
+        std::cout << "Binary:\t" << binary_in << std::endl;
+        std::cout << "SEM:\t";
+        VC::binary_to_SEM(std::bitset<32>(binary_in));
+        std::cout << "Hex:\t" << VC::binary_to_hex(std::bitset<32>(binary_in)) << std::endl;
+    }
+    else
+    {
+        std::cout << "That is not a valid single precision floating point number. Try again." << std::endl;
     }
 
     system("pause");
