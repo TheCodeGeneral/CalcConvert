@@ -296,7 +296,7 @@ bool DoubleNumber()
         }
         Sleep(10);
     }
-    return false;
+    return true;
 }
 
 void MainMenuOptions(short curPos)
