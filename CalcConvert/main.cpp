@@ -10,6 +10,9 @@ void MainMenu();
 bool SingleNumber();
 bool DoubleNumber();
 void get_hex();
+void get_binary();
+void get_float();
+void get_SEM();
 void MainMenuOptions(short curPos);
 void SecondMenuOptions(short curPos);
 
@@ -132,6 +135,7 @@ bool SingleNumber()
                 break;
             case 2:
                 // Binary
+                get_binary();
                 doLoop = !doLoop;
                 break;
             case 3:
@@ -227,6 +231,7 @@ bool DoubleNumber()
                 break;
             case 2:
                 // Binary
+                get_binary();
                 doLoop = !doLoop;
                 break;
             case 3:
@@ -235,7 +240,7 @@ bool DoubleNumber()
                 break;
             case 4:
                 //return
-                return true;
+                MainMenu();
                 doLoop = !doLoop;
                 break;
             case 5:
@@ -419,4 +424,15 @@ void get_hex()
     std::cout << "\nFloat:\t" << VC::hex_to_float(input) << std::endl;
 
     system("pause");
+}
+
+
+void get_float() {
+
+
+
+}
+void get_SEM() {
+
+
 }
