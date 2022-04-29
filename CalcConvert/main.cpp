@@ -14,7 +14,7 @@ void get_binary();
 void get_float();
 void MainMenuOptions(short curPos);
 void SecondMenuOptions(short curPos);
-
+void ClearInputs();
 HANDLE hCon;
 int main()
 {
@@ -165,7 +165,7 @@ bool SingleNumber()
                 SecondMenuOptions(--curPos);
             }
         }
-
+        
         if ((GetAsyncKeyState(0x31) | GetAsyncKeyState(VK_NUMPAD1)) & 0x1)
         {
             SecondMenuOptions(curPos = 0);
@@ -414,6 +414,7 @@ void get_hex()
     std::string input;
     
     std::cin >> input;
+
     input = "0x" + input;
     bool valid_size = (input.size() == 10) ? true : false;
     bool valid_chars = true;
@@ -438,6 +439,7 @@ void get_hex()
         std::cout << "That is not a valid hexadecimal. Try again." << std::endl;
     }
     system("pause");
+    ClearInputs();
 }
 
 void get_binary()
@@ -472,6 +474,7 @@ void get_binary()
     }
 
     system("pause");
+    ClearInputs();
 }
 
 void get_float()
@@ -506,4 +509,28 @@ void get_float()
     }
 
     system("pause");
+    ClearInputs();
+}
+
+// GetAsyncKeyState(KEY) sets LSB if KEY has been pressed since last call.
+// This function prevents the next call from being invalid
+void ClearInputs()
+{
+    GetAsyncKeyState(0x31);
+    GetAsyncKeyState(VK_NUMPAD1);
+
+    GetAsyncKeyState(0x32);
+    GetAsyncKeyState(VK_NUMPAD2);
+
+    GetAsyncKeyState(0x33);
+    GetAsyncKeyState(VK_NUMPAD3);
+
+    GetAsyncKeyState(0x34);
+    GetAsyncKeyState(VK_NUMPAD4);
+
+    GetAsyncKeyState(0x35);
+    GetAsyncKeyState(VK_NUMPAD5);
+
+    GetAsyncKeyState(0x36);
+    GetAsyncKeyState(VK_NUMPAD6);
 }
