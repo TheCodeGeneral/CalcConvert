@@ -12,6 +12,8 @@ bool DoubleNumber();
 void get_hex();
 void get_binary();
 void get_float();
+void get_SEM();
+
 void MainMenuOptions(short curPos);
 void SecondMenuOptions(short curPos);
 void ClearInputs();
@@ -230,6 +232,7 @@ bool DoubleNumber()
                 break;
             case 2:
                 // Binary
+                get_binary();
                 doLoop = !doLoop;
                 break;
             case 3:
@@ -238,7 +241,7 @@ bool DoubleNumber()
                 break;
             case 4:
                 //return
-                return true;
+                MainMenu();
                 doLoop = !doLoop;
                 break;
             case 5:
@@ -512,6 +515,13 @@ void get_float()
     ClearInputs();
 }
 
+void get_SEM() 
+{
+
+
+
+}
+
 // GetAsyncKeyState(KEY) sets LSB if KEY has been pressed since last call.
 // This function prevents the next call from being invalid
 void ClearInputs()
@@ -534,3 +544,4 @@ void ClearInputs()
     GetAsyncKeyState(0x36);
     GetAsyncKeyState(VK_NUMPAD6);
 }
+
