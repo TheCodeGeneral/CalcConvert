@@ -602,7 +602,7 @@ void OperatorMenuOptions(short curPos)
     }
 }
 
-void TwoInputConversions(std::string input, void (*funcName)(bool, std::string*))
+void TwoInputConversions(std::string input, void (*funcName)(bool, std::string*), bool isFloat, bool isHex, bool isBin)
 {
     Values firstNum = { input, true, false, false };
     short opNum = OperatorMenu();
@@ -614,13 +614,20 @@ void TwoInputConversions(std::string input, void (*funcName)(bool, std::string*)
     if (opNum != 10)
     {
         funcName(false, &secondInput);
-        secondNum = new Values(secondInput, true, false, false );
+        if (isHex)
+            secondNum = new Values(secondInput, true, false, false);
+        else if (isBin)
+            secondNum = new Values(secondInput, false, true, false);
+        else if (isFloat)
+            secondNum = new Values(stof(secondInput));
+        // SEM
+
     }
     switch (opNum)
     {
     case 0:
         // Addition
-        thirdNum = new Values(VA::Add(firstNum.GetFloat(), secondNum->GetFloat()));
+        thirdNum = new Values(firstNum.GetFloat() + secondNum->GetFloat());
         break;
     case 1:
         thirdNum = new Values(VA::Subtract(firstNum.GetFloat(), secondNum->GetFloat()));
@@ -709,7 +716,7 @@ void get_hex(bool isOperating, std::string* inputReturnWithoutReturning)
         *inputReturnWithoutReturning = input;
 	ClearInputs();
     if (isOperating)
-        TwoInputConversions(input, &get_hex);
+        TwoInputConversions(input, &get_hex, false, true, false);
     else if (inputReturnWithoutReturning == nullptr)
     {
         std::cout << Values(input, true, false, false).ToString();
@@ -752,7 +759,7 @@ void get_binary(bool isOperating, std::string* inputReturnWithoutReturning)
         *inputReturnWithoutReturning = input;
     ClearInputs();
     if (isOperating)
-        TwoInputConversions(input, &get_binary);
+        TwoInputConversions(input, &get_binary, false, false, true);
     else if (inputReturnWithoutReturning == nullptr)
     {
         std::cout << Values(input, false, true, false).ToString();
@@ -793,7 +800,7 @@ void get_float(bool isOperating, std::string* inputReturnWithoutReturning)
         *inputReturnWithoutReturning = input;
     ClearInputs();
     if (isOperating)
-        TwoInputConversions(input, &get_float);
+        TwoInputConversions(input, &get_float, true, false, false);
     else if (!inputReturnWithoutReturning)
     {
         std::cout << Values(stof(input)).ToString();
