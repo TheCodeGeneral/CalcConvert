@@ -68,14 +68,14 @@ namespace VA
 	{
 		//Only pass in binary
 		std::bitset<32> x(op1);
-		int n_times = std::stoi(op2);
+		int n_times = (int)VC::BinaryToFloat(std::bitset<32>{op2});
 		return (x >> n_times).to_string();
 	}
 	std::string SHL(std::string op1, std::string op2)
 	{
 		//Only pass in binary
 		std::bitset<32> x(op1);
-		int n_times = std::stoi(op2);
+		int n_times = (int)VC::BinaryToFloat(std::bitset<32>{op2});
 		return (x << n_times).to_string();
 	}
 }

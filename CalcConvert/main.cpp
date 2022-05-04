@@ -616,74 +616,94 @@ void TwoInputConversions(std::string input, void (*funcName)(bool, std::string*)
     {
         funcName(false, &secondInput);
     }
+	system("cls");
 
 	if (isHex)
 	{
 		firstNum = new Values(input, true, false, false);
-		secondNum = new Values(secondInput, true, false, false);
+		if (opNum != 10)
+			secondNum = new Values(secondInput, true, false, false);
 	}
 	else if (isBin)
 	{
 		firstNum = new Values(input, false, true, false);
-		secondNum = new Values(secondInput, false, true, false);
+		if (opNum != 10)
+			secondNum = new Values(secondInput, false, true, false);
 	}
 	else if (isFloat)
 	{
 		firstNum = new Values(stof(input));
-		secondNum = new Values(stof(secondInput));
+		if (opNum != 10)
+			secondNum = new Values(stof(secondInput));
 	}
 	// SEM
+    std::cout << "First Number:\n" << firstNum->ToString() << std::endl;
 
+    std::cout << "Operator:\t";
     switch (opNum)
     {
     case 0:
         // Addition
+        std::cout << "+\n\n";
         thirdNum = new Values(VA::Add(firstNum->GetFloat(), secondNum->GetFloat()));
         break;
     case 1:
+        std::cout << "-\n\n";
         thirdNum = new Values(VA::Subtract(firstNum->GetFloat(), secondNum->GetFloat()));
         // Subtraction
         break;
     case 2:
+        std::cout << "*\n\n";
         thirdNum = new Values(VA::Mult(firstNum->GetFloat(), secondNum->GetFloat()));
         // Multiplication
         break;
     case 3:
+        std::cout << "/\n\n";
         thirdNum = new Values(VA::Division(firstNum->GetFloat(), secondNum->GetFloat()));
         // Division
         break;
     case 4:
+        std::cout << "AND\n\n";
         thirdNum = new Values(VA::AND(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // AND
         break;
     case 5:
+        std::cout << "OR\n\n";
         thirdNum = new Values(VA::OR(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // OR
         break;
     case 6:
+        std::cout << "NOR\n\n";
         thirdNum = new Values(VA::NOR(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // NOR
         break;
     case 7:
+        std::cout << "XOR\n\n";
         thirdNum = new Values(VA::XOR(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // XOR
         break;
     case 8:
+        std::cout << "SHL\n\n";
         thirdNum = new Values(VA::SHL(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // SHL
         break;
     case 9:
+        std::cout << "SHR\n\n";
         thirdNum = new Values(VA::SHR(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // SHR
         break;
     case 10:
+        std::cout << "NOT\n\n";
         thirdNum = new Values(VA::NOT(firstNum->GetBin()), false, true, false);
         // NOT
         break;
     }
-    std::cout << firstNum->ToString() << std::endl;
-    if(opNum != 10)
+    if (opNum != 10)
+    {
+        std::cout << "Second Number:\n";
         std::cout << secondNum->ToString() << std::endl;
+    }
+    std::cout << "Result:\n";
     std::cout << thirdNum->ToString() << std::endl;
 
     delete firstNum;
