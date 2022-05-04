@@ -702,6 +702,7 @@ void get_hex(bool isOperating, std::string* inputReturnWithoutReturning)
         else
         {
             std::cout << "That is not a valid hexadecimal. Try again." << std::endl;
+            system("pause");
         }
     }
     if(inputReturnWithoutReturning != nullptr)
@@ -709,7 +710,7 @@ void get_hex(bool isOperating, std::string* inputReturnWithoutReturning)
 	ClearInputs();
     if (isOperating)
         TwoInputConversions(input, &get_hex);
-    else if (!inputReturnWithoutReturning)
+    else if (inputReturnWithoutReturning == nullptr)
     {
         std::cout << Values(input, true, false, false).ToString();
         system("pause");
@@ -718,72 +719,86 @@ void get_hex(bool isOperating, std::string* inputReturnWithoutReturning)
 
 void get_binary(bool isOperating, std::string* inputReturnWithoutReturning)
 {
-    system("cls");
-    std::cout << "Please enter a valid 32 bit binary number\n=>";
-    std::string input;
+	std::string input;
 
-    std::cin >> input;
-    bool valid_size = (input.size() == 32) ? true : false;
-    bool valid_chars = true;
-    for (int i = 0; i < input.size(); i++)
+    while (true)
     {
-        if (!(input.at(i) == '0' || input.at(i) == '1'))
+        system("cls");
+        std::cout << "Please enter a valid 32 bit binary number\n=>";
+
+        std::cin >> input;
+        bool valid_size = (input.size() == 32) ? true : false;
+        bool valid_chars = true;
+        for (int i = 0; i < input.size(); i++)
         {
-            valid_chars = false;
+            if (!(input.at(i) == '0' || input.at(i) == '1'))
+            {
+                valid_chars = false;
+                break;
+            }
+        }
+
+        if (valid_size && valid_chars)
+        {
             break;
         }
+        else
+        {
+            std::cout << "That is not a valid 32-bit binary. Try again." << std::endl;
+            system("pause");
+        }
     }
-
-    if (valid_size && valid_chars)
-    {
-        std::cout << "Binary:\t" << input << std::endl;
-        std::cout << "Hex:\t" << VC::binary_to_hex(std::bitset<32>(input)) << std::endl;
-        std::cout << "SEM:\t";
-        VC::binary_to_SEM(std::bitset<32>(input));
-        std::cout << "Float:\t" << VC::BinaryToFloat(std::bitset<32>(input)) << std::endl;
-    }   
-    else
-    {
-        std::cout << "That is not a valid 32-bit binary. Try again." << std::endl;
-    }
-
-    system("pause");
+    if (inputReturnWithoutReturning != nullptr)
+        *inputReturnWithoutReturning = input;
     ClearInputs();
+    if (isOperating)
+        TwoInputConversions(input, &get_binary);
+    else if (inputReturnWithoutReturning == nullptr)
+    {
+        std::cout << Values(input, false, true, false).ToString();
+        system("pause");
+    }
 }
 
 void get_float(bool isOperating, std::string* inputReturnWithoutReturning)
 {
-    system("cls");
-    std::cout << "Please enter a valid floating point number\n=>";
-    std::string input;
-
-    std::cin >> input;
-    bool valid_chars = true;
-    for (int i = 0; i < input.size(); i++)
+	std::string input;
+    while (true)
     {
-        if (!(isdigit(input.at(i)) || input.at(i) == '-' || input.at(i) == '.' || input.at(i) == '+'))
+        system("cls");
+        std::cout << "Please enter a valid floating point number\n=>";
+
+        std::cin >> input;
+        bool valid_chars = true;
+        for (int i = 0; i < input.size(); i++)
         {
-            valid_chars = false;
+            if (!(isdigit(input.at(i)) || input.at(i) == '-' || input.at(i) == '.' || input.at(i) == '+'))
+            {
+                valid_chars = false;
+                break;
+            }
+        }
+
+        if (valid_chars)
+        {
             break;
         }
+        else
+        {
+            std::cout << "That is not a valid single precision floating point number. Try again." << std::endl;
+            system("pause");
+        }
     }
-
-    if (valid_chars)
-    {
-        std::string binary_in = VC::FloatToBinary(std::stof(input));
-        std::cout << "Float:\t" << input << std::endl;
-        std::cout << "Binary:\t" << binary_in << std::endl;
-        std::cout << "SEM:\t";
-        VC::binary_to_SEM(std::bitset<32>(binary_in));
-        std::cout << "Hex:\t" << VC::binary_to_hex(std::bitset<32>(binary_in)) << std::endl;
-    }
-    else
-    {
-        std::cout << "That is not a valid single precision floating point number. Try again." << std::endl;
-    }
-
-    system("pause");
+    if (inputReturnWithoutReturning != nullptr)
+        *inputReturnWithoutReturning = input;
     ClearInputs();
+    if (isOperating)
+        TwoInputConversions(input, &get_float);
+    else if (!inputReturnWithoutReturning)
+    {
+        std::cout << Values(stof(input)).ToString();
+        system("pause");
+    }
 }
 
 void get_SEM(bool isOperating, std::string* inputReturnWithoutReturning)
