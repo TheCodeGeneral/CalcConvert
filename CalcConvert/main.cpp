@@ -225,7 +225,6 @@ short OperatorMenu()
         {
             std::string discard{};
             std::getline(std::cin, discard);
-
             return curPos;
 		}
         // Move highlighted option down/up
@@ -302,6 +301,7 @@ short OperatorMenu()
         }
         Sleep(10);
     }
+
 }
 
 
@@ -604,77 +604,89 @@ void OperatorMenuOptions(short curPos)
 
 void TwoInputConversions(std::string input, void (*funcName)(bool, std::string*), bool isFloat, bool isHex, bool isBin)
 {
-    Values firstNum = { input, true, false, false };
     short opNum = OperatorMenu();
 
-	std::string secondInput{};
+    Values* firstNum = nullptr;
     Values* secondNum = nullptr;
     Values* thirdNum = nullptr;
+
+	std::string secondInput{};
 
     if (opNum != 10)
     {
         funcName(false, &secondInput);
-        if (isHex)
-            secondNum = new Values(secondInput, true, false, false);
-        else if (isBin)
-            secondNum = new Values(secondInput, false, true, false);
-        else if (isFloat)
-            secondNum = new Values(stof(secondInput));
-        // SEM
-
     }
+
+	if (isHex)
+	{
+		firstNum = new Values(input, true, false, false);
+		secondNum = new Values(secondInput, true, false, false);
+	}
+	else if (isBin)
+	{
+		firstNum = new Values(input, false, true, false);
+		secondNum = new Values(secondInput, false, true, false);
+	}
+	else if (isFloat)
+	{
+		firstNum = new Values(stof(input));
+		secondNum = new Values(stof(secondInput));
+	}
+	// SEM
+
     switch (opNum)
     {
     case 0:
         // Addition
-        thirdNum = new Values(firstNum.GetFloat() + secondNum->GetFloat());
+        thirdNum = new Values(VA::Add(firstNum->GetFloat(), secondNum->GetFloat()));
         break;
     case 1:
-        thirdNum = new Values(VA::Subtract(firstNum.GetFloat(), secondNum->GetFloat()));
+        thirdNum = new Values(VA::Subtract(firstNum->GetFloat(), secondNum->GetFloat()));
         // Subtraction
         break;
     case 2:
-        thirdNum = new Values(VA::Mult(firstNum.GetFloat(), secondNum->GetFloat()));
+        thirdNum = new Values(VA::Mult(firstNum->GetFloat(), secondNum->GetFloat()));
         // Multiplication
         break;
     case 3:
-        thirdNum = new Values(VA::Division(firstNum.GetFloat(), secondNum->GetFloat()));
+        thirdNum = new Values(VA::Division(firstNum->GetFloat(), secondNum->GetFloat()));
         // Division
         break;
     case 4:
-        thirdNum = new Values(VA::AND(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        thirdNum = new Values(VA::AND(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // AND
         break;
     case 5:
-        thirdNum = new Values(VA::OR(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        thirdNum = new Values(VA::OR(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // OR
         break;
     case 6:
-        thirdNum = new Values(VA::NOR(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        thirdNum = new Values(VA::NOR(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // NOR
         break;
     case 7:
-        thirdNum = new Values(VA::XOR(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        thirdNum = new Values(VA::XOR(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // XOR
         break;
     case 8:
-        thirdNum = new Values(VA::SHL(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        thirdNum = new Values(VA::SHL(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // SHL
         break;
     case 9:
-        thirdNum = new Values(VA::SHR(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        thirdNum = new Values(VA::SHR(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
         // SHR
         break;
     case 10:
-        thirdNum = new Values(VA::NOT(firstNum.GetBin()), false, true, false);
+        thirdNum = new Values(VA::NOT(firstNum->GetBin()), false, true, false);
         // NOT
         break;
     }
-    std::cout << firstNum.ToString() << std::endl;
+    std::cout << firstNum->ToString() << std::endl;
     if(opNum != 10)
         std::cout << secondNum->ToString() << std::endl;
     std::cout << thirdNum->ToString() << std::endl;
 
+    delete firstNum;
     delete secondNum;
     delete thirdNum;
 
