@@ -2,19 +2,19 @@
 #include <Windows.h>
 #include "ValueConvert.h"
 #include "ValueArithmetic.h"
+#include "Values.h"
 
 #define WHITE_BACKGROUND SetConsoleTextAttribute(hCon, (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE) | FOREGROUND_RED & FOREGROUND_GREEN & FOREGROUND_BLUE)
 #define BLACK_BACKGROUND SetConsoleTextAttribute(hCon, (BACKGROUND_RED & BACKGROUND_GREEN & BACKGROUND_BLUE) | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
 
 void MainMenu();
-bool SingleNumber();
-bool DoubleNumber();
-void OperatorMenu();
+bool ChooseInputType(bool isOperating);
+short OperatorMenu();
 
-void get_hex();
-void get_binary();
-void get_float();
-void get_SEM();
+void get_hex(bool isOperating, std::string* inputReturnWithoutReturning = nullptr);
+void get_binary(bool isOperating, std::string* inputReturnWithoutReturning = nullptr);
+void get_float(bool isOperating, std::string* inputReturnWithoutReturning = nullptr);
+void get_SEM(bool isOperating, std::string* inputReturnWithoutReturning = nullptr);
 
 
 void MainMenuOptions(short curPos);
@@ -57,7 +57,7 @@ void MainMenu()
             {
             case 0:
                 // Single number input
-                if (SingleNumber() == true)
+                if (ChooseInputType(false) == true)
                     MainMenuOptions(curPos);
                 else
                     doLoop = !doLoop;
@@ -65,7 +65,7 @@ void MainMenu()
                 break;
             case 1:
                 // 2 Number input
-                if (DoubleNumber() == true)
+                if (ChooseInputType(true) == true)
                     MainMenuOptions(curPos);
                 else
                     doLoop = !doLoop;
@@ -114,7 +114,7 @@ void MainMenu()
 }
 
 // returns true when returning to main menu
-bool SingleNumber()
+bool ChooseInputType(bool isOperating)
 {
     bool doLoop = true;
     short curPos = 0;
@@ -131,21 +131,22 @@ bool SingleNumber()
             {
             case 0:
                 // Flaoting Point
-                get_float();
+                get_float(isOperating);
                 doLoop = !doLoop;
                 break;
             case 1:
                 // Hex
-                get_hex();
+                get_hex(isOperating);
                 doLoop = !doLoop;
                 break;
             case 2:
                 // Binary
-                get_binary();
+                get_binary(isOperating);
                 doLoop = !doLoop;
                 break;
             case 3:
                 // SEM
+                get_SEM(isOperating);
                 doLoop = !doLoop;
                 break;
             case 4:
@@ -154,7 +155,7 @@ bool SingleNumber()
                 break;
             case 5:
                 // Exit
-                doLoop = !doLoop;
+                return false;
                 break;
             }
         }
@@ -199,12 +200,10 @@ bool SingleNumber()
         {
             SecondMenuOptions(curPos = 4);
             // Return
-            //return true;
         }
         else if ((GetAsyncKeyState(0x36) | GetAsyncKeyState(VK_NUMPAD6)) & 0x1)
         {
             SecondMenuOptions(curPos = 5);
-            //return false;
             // Exit
         }
 
@@ -213,107 +212,7 @@ bool SingleNumber()
     return true;
 }
 
-// returns true when returning to main menu
-bool DoubleNumber()
-{
-    bool doLoop = true;
-    short curPos = 0;
-    SecondMenuOptions(curPos);
-    OperatorMenu();
-
-    while (doLoop)
-    {
-        // Select highlighted menu option
-        if (GetAsyncKeyState(VK_RETURN) & 0x1)
-        {
-            std::string discard{};
-            std::getline(std::cin, discard);
-            switch (curPos)
-            {
-            case 0:
-                // Flaoting Point
-                doLoop = !doLoop;
-                break;
-            case 1:
-                // Hex
-                doLoop = !doLoop;
-                break;
-            case 2:
-                // Binary
-                get_binary();
-                doLoop = !doLoop;
-                break;
-            case 3:
-                // SEM
-                doLoop = !doLoop;
-                break;
-            case 4:
-                //return
-                MainMenu();
-                doLoop = !doLoop;
-                break;
-            case 5:
-                // Exit
-                return false;
-                doLoop = !doLoop;
-                break;
-            }
-        }
-        // Move highlighted menu option down/up
-        else if (GetAsyncKeyState(VK_DOWN) & 0x1)
-        {
-            if (curPos >= 0 && curPos < 5)
-            {
-                SecondMenuOptions(++curPos);
-            }
-        }
-        else if (GetAsyncKeyState(VK_UP) & 0x1)
-        {
-            if (curPos > 0 && curPos <= 5)
-            {
-                SecondMenuOptions(--curPos);
-            }
-        }
-
-        // Highlight menu options
-        if ((GetAsyncKeyState(0x31) | GetAsyncKeyState(VK_NUMPAD1)) & 0x1)
-        {
-            SecondMenuOptions(curPos = 0);
-            // floating point
-        }
-        else if ((GetAsyncKeyState(0x32) | GetAsyncKeyState(VK_NUMPAD2)) & 0x1)
-        {
-            SecondMenuOptions(curPos = 1);
-            // Hex
-        }
-        else if ((GetAsyncKeyState(0x33) | GetAsyncKeyState(VK_NUMPAD3)) & 0x1)
-        {
-            SecondMenuOptions(curPos = 2);
-            // Binary
-        }
-        else if ((GetAsyncKeyState(0x34) | GetAsyncKeyState(VK_NUMPAD4)) & 0x1)
-        {
-            SecondMenuOptions(curPos = 3);
-            // SEM
-        }
-        else if ((GetAsyncKeyState(0x35) | GetAsyncKeyState(VK_NUMPAD5)) & 0x1)
-        {
-            SecondMenuOptions(curPos = 4);
-            // Return
-            //return true;
-        }
-        else if ((GetAsyncKeyState(0x36) | GetAsyncKeyState(VK_NUMPAD6)) & 0x1)
-        {
-            SecondMenuOptions(curPos = 5);
-            //return false;
-            // Exit
-        }
-        Sleep(10);
-    }
-    return true;
-}
-
-void OperatorMenu()
+short OperatorMenu()
 {
     bool doLoop = true;
     short curPos = 0;
@@ -326,51 +225,20 @@ void OperatorMenu()
         {
             std::string discard{};
             std::getline(std::cin, discard);
-            switch (curPos)
-            {
-            case 0:
-                // Addition
-                break;
-            case 1:
-                // Subtraction
-                break;
-            case 2:
-                // Multiplication
-                break;
-            case 3:
-                // Division
-                break;
-            case 4:
-                // AND
-                break;
-            case 5:
-                // OR
-                break;
-            case 6:
-                // NOR
-                break;
-            case 7:
-                // XOR
-                break;
-            case 8:
-                // SHL
-                break;
-            case 9:
-                // SHR
-                break;
-            }
-        }
+
+            return curPos;
+		}
         // Move highlighted option down/up
         else if (GetAsyncKeyState(VK_DOWN) & 0x1)
         {
-            if (curPos >= 0 && curPos < 9)
+            if (curPos >= 0 && curPos < 10)
             {
                 OperatorMenuOptions(++curPos);
             }
         }
         else if (GetAsyncKeyState(VK_UP) & 0x1)
         {
-            if (curPos > 0 && curPos <= 9)
+            if (curPos > 0 && curPos <= 10)
             {
                 OperatorMenuOptions(--curPos);
             }
@@ -423,11 +291,15 @@ void OperatorMenu()
             OperatorMenuOptions(curPos = 8);
         }
         // SHR
-        else if ((GetAsyncKeyState(0x30) | GetAsyncKeyState(VK_NUMPAD0)) & 0x1)
+        else if (GetAsyncKeyState(0x41))
         {
             OperatorMenuOptions(curPos = 9);
         }
-
+        // NOT
+        else if (GetAsyncKeyState(0x42))
+        {
+            OperatorMenuOptions(curPos = 10);
+        }
         Sleep(10);
     }
 }
@@ -561,7 +433,8 @@ void OperatorMenuOptions(short curPos)
         std::cout << "7.   [NOR]\n";
         std::cout << "8.   [XOR]\n";
         std::cout << "9.   [SHL]\n";
-        std::cout << "0.   [SHR]\n";
+        std::cout << "A.   [SHR]\n";
+        std::cout << "B.   [NOT]\n";
         break;
     case 1:
         std::cout << "1.   [Addition]\n";
@@ -576,7 +449,8 @@ void OperatorMenuOptions(short curPos)
         std::cout << "7.   [NOR]\n";
         std::cout << "8.   [XOR]\n";
         std::cout << "9.   [SHL]\n";
-        std::cout << "0.   [SHR]\n";
+        std::cout << "A.   [SHR]\n";
+        std::cout << "B.   [NOT]\n";
         break;
     case 2:
         std::cout << "1.   [Addition]\n";
@@ -591,7 +465,8 @@ void OperatorMenuOptions(short curPos)
         std::cout << "7.   [NOR]\n";
         std::cout << "8.   [XOR]\n";
         std::cout << "9.   [SHL]\n";
-        std::cout << "0.   [SHR]\n";
+        std::cout << "A.   [SHR]\n";
+        std::cout << "B.   [NOT]\n";
         break;
     case 3:
         std::cout << "1.   [Addition]\n";
@@ -606,7 +481,8 @@ void OperatorMenuOptions(short curPos)
         std::cout << "7.   [NOR]\n";
         std::cout << "8.   [XOR]\n";
         std::cout << "9.   [SHL]\n";
-        std::cout << "0.   [SHR]\n";
+        std::cout << "A.   [SHR]\n";
+        std::cout << "B.   [NOT]\n";
         break;
     case 4:
         std::cout << "1.   [Addition]\n";
@@ -621,7 +497,8 @@ void OperatorMenuOptions(short curPos)
         std::cout << "7.   [NOR]\n";
         std::cout << "8.   [XOR]\n";
         std::cout << "9.   [SHL]\n";
-        std::cout << "0.   [SHR]\n";
+        std::cout << "A.   [SHR]\n";
+        std::cout << "B.   [NOT]\n";
         break;
     case 5:
         std::cout << "1.   [Addition]\n";
@@ -636,7 +513,8 @@ void OperatorMenuOptions(short curPos)
         std::cout << "7.   [NOR]\n";
         std::cout << "8.   [XOR]\n";
         std::cout << "9.   [SHL]\n";
-        std::cout << "0.   [SHR]\n";
+        std::cout << "A.   [SHR]\n";
+        std::cout << "B.   [NOT]\n";
         break;
     case 6:
         std::cout << "1.   [Addition]\n";
@@ -651,7 +529,8 @@ void OperatorMenuOptions(short curPos)
         BLACK_BACKGROUND;
         std::cout << "8.   [XOR]\n";
         std::cout << "9.   [SHL]\n";
-        std::cout << "0.   [SHR]\n";
+        std::cout << "A.   [SHR]\n";
+        std::cout << "B.   [NOT]\n";
         break;
     case 7:
         std::cout << "1.   [Addition]\n";
@@ -666,7 +545,8 @@ void OperatorMenuOptions(short curPos)
         std::cout << "[XOR]\n";
         BLACK_BACKGROUND;
         std::cout << "9.   [SHL]\n";
-        std::cout << "0.   [SHR]\n";
+        std::cout << "A.   [SHR]\n";
+        std::cout << "B.   [NOT]\n";
         break;
     case 8:
         std::cout << "1.   [Addition]\n";
@@ -681,7 +561,8 @@ void OperatorMenuOptions(short curPos)
         WHITE_BACKGROUND;
         std::cout << "[SHL]\n";
         BLACK_BACKGROUND;
-        std::cout << "0.   [SHR]\n";
+        std::cout << "A.   [SHR]\n";
+        std::cout << "B.   [NOT]\n";
         break;
     case 9:
         std::cout << "1.   [Addition]\n";
@@ -693,51 +574,149 @@ void OperatorMenuOptions(short curPos)
         std::cout << "7.   [NOR]\n";
         std::cout << "8.   [XOR]\n";
         std::cout << "9.   [SHL]\n";
-        std::cout << "0.   ";
+        std::cout << "A.   ";
         WHITE_BACKGROUND;
         std::cout << "[SHR]\n";
+        BLACK_BACKGROUND;
+        std::cout << "B.   [NOT]\n";
+        break;
+    case 10:
+        std::cout << "1.   [Addition]\n";
+        std::cout << "2.   [Subtraction]\n";
+        std::cout << "3.   [Multiplication]\n";
+        std::cout << "4.   [Division]\n";
+        std::cout << "5.   [AND]\n";
+        std::cout << "6.   [OR]\n";
+        std::cout << "7.   [NOR]\n";
+        std::cout << "8.   [XOR]\n";
+        std::cout << "9.   [SHL]\n";
+        std::cout << "A.   ";
+        std::cout << "[SHR]\n";
+        std::cout << "B.   ";
+        WHITE_BACKGROUND;
+        std::cout << "[NOT]\n";
         BLACK_BACKGROUND;
         break;
     default:
         std::cout << "\n\nYou dun goofed somehow\n\n";
     }
 }
-void get_hex()
-{
-    system("cls");
-    std::cout << "Please enter a valid Hexadecimal number\n0x";
-    std::string input;
-    
-    std::cin >> input;
 
-    input = "0x" + input;
-    bool valid_size = (input.size() == 10) ? true : false;
-    bool valid_chars = true;
-    for (int i = 0; i < input.size(); i++)
+void TwoInputConversions(std::string input, void (*funcName)(bool, std::string*))
+{
+    Values firstNum = { input, true, false, false };
+    short opNum = OperatorMenu();
+
+	std::string secondInput{};
+    Values* secondNum = nullptr;
+    Values* thirdNum = nullptr;
+
+    if (opNum != 10)
     {
-        if (!(isdigit(input.at(i))) && !(std::toupper(input.at(i), std::locale()) == 'A' || std::toupper(input.at(i), std::locale()) == 'B' || std::toupper(input.at(i), std::locale()) == 'C' || std::toupper(input.at(i), std::locale()) == 'D' || std::toupper(input.at(i), std::locale()) == 'E' || std::toupper(input.at(i), std::locale()) == 'F' || std::toupper(input.at(i), std::locale()) == 'X'))
-        {
-            valid_chars = false;
-            break;
-        }
+        funcName(false, &secondInput);
+        secondNum = new Values(secondInput, true, false, false );
     }
-    if (valid_size && valid_chars)
+    switch (opNum)
     {
-        std::cout << "Hex:\t" << input << std::endl;
-        std::cout << "Binary:\t" << VC::hex_to_binary(input) << std::endl;
-        std::cout << "SEM:\t";
-        VC::hex_to_SEM(input);
-        std::cout << "\nFloat:\t" << VC::hex_to_float(input) << std::endl;
+    case 0:
+        // Addition
+        thirdNum = new Values(VA::Add(firstNum.GetFloat(), secondNum->GetFloat()));
+        break;
+    case 1:
+        thirdNum = new Values(VA::Subtract(firstNum.GetFloat(), secondNum->GetFloat()));
+        // Subtraction
+        break;
+    case 2:
+        thirdNum = new Values(VA::Mult(firstNum.GetFloat(), secondNum->GetFloat()));
+        // Multiplication
+        break;
+    case 3:
+        thirdNum = new Values(VA::Division(firstNum.GetFloat(), secondNum->GetFloat()));
+        // Division
+        break;
+    case 4:
+        thirdNum = new Values(VA::AND(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        // AND
+        break;
+    case 5:
+        thirdNum = new Values(VA::OR(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        // OR
+        break;
+    case 6:
+        thirdNum = new Values(VA::NOR(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        // NOR
+        break;
+    case 7:
+        thirdNum = new Values(VA::XOR(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        // XOR
+        break;
+    case 8:
+        thirdNum = new Values(VA::SHL(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        // SHL
+        break;
+    case 9:
+        thirdNum = new Values(VA::SHR(firstNum.GetBin(), secondNum->GetBin()), false, true, false);
+        // SHR
+        break;
+    case 10:
+        thirdNum = new Values(VA::NOT(firstNum.GetBin()), false, true, false);
+        // NOT
+        break;
     }
-    else 
-    {  
-        std::cout << "That is not a valid hexadecimal. Try again." << std::endl;
-    }
+    std::cout << firstNum.ToString() << std::endl;
+    if(opNum != 10)
+        std::cout << secondNum->ToString() << std::endl;
+    std::cout << thirdNum->ToString() << std::endl;
+
+    delete secondNum;
+    delete thirdNum;
+
     system("pause");
-    ClearInputs();
 }
 
-void get_binary()
+void get_hex(bool isOperating, std::string* inputReturnWithoutReturning)
+{
+	std::string input;
+
+    while (true)
+    {
+        system("cls");
+        std::cout << "Please enter a valid Hexadecimal number\n0x";
+
+        std::cin >> input;
+
+        input = "0x" + input;
+        bool valid_size = (input.size() == 10) ? true : false;
+        bool valid_chars = true;
+        for (int i = 0; i < input.size(); i++)
+        {
+            if (!(isdigit(input.at(i))) && !(std::toupper(input.at(i), std::locale()) == 'A' || std::toupper(input.at(i), std::locale()) == 'B' || std::toupper(input.at(i), std::locale()) == 'C' || std::toupper(input.at(i), std::locale()) == 'D' || std::toupper(input.at(i), std::locale()) == 'E' || std::toupper(input.at(i), std::locale()) == 'F' || std::toupper(input.at(i), std::locale()) == 'X'))
+            {
+                valid_chars = false;
+            }
+        }
+        if (valid_size && valid_chars)
+        {
+            break;
+        }
+        else
+        {
+            std::cout << "That is not a valid hexadecimal. Try again." << std::endl;
+        }
+    }
+    if(inputReturnWithoutReturning != nullptr)
+        *inputReturnWithoutReturning = input;
+	ClearInputs();
+    if (isOperating)
+        TwoInputConversions(input, &get_hex);
+    else if (!inputReturnWithoutReturning)
+    {
+        std::cout << Values(input, true, false, false).ToString();
+        system("pause");
+    }
+}
+
+void get_binary(bool isOperating, std::string* inputReturnWithoutReturning)
 {
     system("cls");
     std::cout << "Please enter a valid 32 bit binary number\n=>";
@@ -772,7 +751,7 @@ void get_binary()
     ClearInputs();
 }
 
-void get_float()
+void get_float(bool isOperating, std::string* inputReturnWithoutReturning)
 {
     system("cls");
     std::cout << "Please enter a valid floating point number\n=>";
@@ -807,7 +786,7 @@ void get_float()
     ClearInputs();
 }
 
-void get_SEM() 
+void get_SEM(bool isOperating, std::string* inputReturnWithoutReturning)
 {
 
 
@@ -847,5 +826,12 @@ void ClearInputs()
 
     GetAsyncKeyState(0x30);
     GetAsyncKeyState(VK_NUMPAD0);
+
+    // A
+    GetAsyncKeyState(0x41);
+    // B
+    GetAsyncKeyState(0x42);
+
+    GetAsyncKeyState(VK_RETURN);
 }
 

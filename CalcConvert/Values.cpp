@@ -11,10 +11,12 @@ Values::Values(std::string str, bool isHex, bool isBin, bool isSEM)
 		bin = new std::string(str);
 	else
 		sem = new std::string(str);
+	InitOthers();
 }
 Values::Values(float f) 
 { 
 	this->f = new float(f);
+	InitOthers();
 }
 Values::~Values()
 {
@@ -54,10 +56,10 @@ void Values::InitOthers()
 std::string Values::ToString()
 {
 	std::stringstream stream;
-	stream << "Hex:\t" << hex
-		<< "\nBinary:\t" << bin
-		<< "\nSEM:\t" << sem
-		<< "\nFloat:\t" << f << std::endl;
+	stream << "Hex:\t" << *hex
+		<< "\nBinary:\t" << *bin
+		<< "\nSEM:\t" << *sem
+		<< "\nFloat:\t" << *f << std::endl;
 
 	return stream.str();
 }
