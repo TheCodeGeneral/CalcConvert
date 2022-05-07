@@ -64,18 +64,26 @@ namespace VA
 		std::bitset<32> y(op2);
 		return (x ^ y).to_string();
 	}
-	std::string SHR(std::string op1, std::string op2)
+	std::string SHR(std::string op1, std::string op2, bool isFloat)
 	{
 		//Only pass in binary
 		std::bitset<32> x(op1);
-		int n_times = (int)VC::BinaryToFloat(std::bitset<32>{op2});
+		int n_times{};
+		if(isFloat)
+			n_times = (int)VC::BinaryToFloat(std::bitset<32>{op2});
+		else
+			n_times = stoi(op2, nullptr, 2);
 		return (x >> n_times).to_string();
 	}
-	std::string SHL(std::string op1, std::string op2)
+	std::string SHL(std::string op1, std::string op2, bool isFloat)
 	{
 		//Only pass in binary
 		std::bitset<32> x(op1);
-		int n_times = (int)VC::BinaryToFloat(std::bitset<32>{op2});
+		int n_times{};
+		if(isFloat)
+			n_times = (int)VC::BinaryToFloat(std::bitset<32>{op2});
+		else
+			n_times = stoi(op2, nullptr, 2);
 		return (x << n_times).to_string();
 	}
 }

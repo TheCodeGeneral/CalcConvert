@@ -225,6 +225,8 @@ short OperatorMenu()
         {
             std::string discard{};
             std::getline(std::cin, discard);
+            std::cin.ignore((std::streamsize)std::numeric_limits<std::streamsize>::max, '\n');
+            Sleep(150);
             return curPos;
 		}
         // Move highlighted option down/up
@@ -684,12 +686,12 @@ void TwoInputConversions(std::string input, void (*funcName)(bool, std::string*)
         break;
     case 8:
         std::cout << "SHL\n\n";
-        thirdNum = new Values(VA::SHL(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
+        thirdNum = new Values(VA::SHL(firstNum->GetBin(), secondNum->GetBin(), isFloat), false, true, false);
         // SHL
         break;
     case 9:
         std::cout << "SHR\n\n";
-        thirdNum = new Values(VA::SHR(firstNum->GetBin(), secondNum->GetBin()), false, true, false);
+        thirdNum = new Values(VA::SHR(firstNum->GetBin(), secondNum->GetBin(), isFloat), false, true, false);
         // SHR
         break;
     case 10:
@@ -842,9 +844,50 @@ void get_float(bool isOperating, std::string* inputReturnWithoutReturning)
 
 void get_SEM(bool isOperating, std::string* inputReturnWithoutReturning)
 {
+    std::string input;
 
+    while (true)
+    {
+        system("cls");
+        std::cout << "Please enter a valid 32 bit binary number in SEM format\n=>";
 
+        std::getline(std::cin, input);
+        bool valid_size = (input.size() == 34) ? true : false;
+        bool valid_chars = true;
+        for (int i = 0; i < input.size(); i++)
+        {
+            if ((i == 1 || i == 10)) 
+            {
+                if(input.at(i) != ' ')
+					valid_chars = false;
+            }
+            else if (!(input.at(i) == '0' || input.at(i) == '1'))
+            {
+                valid_chars = false;
+                break;
+            }
+        }
 
+        if (valid_size && valid_chars)
+        {
+            break;
+        }
+        else
+        {
+            std::cout << "That is not a valid 32-bit SEM binary. Try again." << std::endl;
+            system("pause");
+        }
+    }
+    if (inputReturnWithoutReturning != nullptr)
+        *inputReturnWithoutReturning = VC::SEM_to_binary(input);
+    ClearInputs();
+    if (isOperating)
+        TwoInputConversions(VC::SEM_to_binary(input), &get_SEM, false, false, true);
+    else if (inputReturnWithoutReturning == nullptr)
+    {
+        std::cout << Values(VC::SEM_to_binary(input), false, true, false).ToString();
+        system("pause");
+    }
 }
 
 // GetAsyncKeyState(KEY) sets LSB if KEY has been pressed since last call.

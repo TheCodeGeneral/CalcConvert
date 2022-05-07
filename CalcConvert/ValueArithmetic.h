@@ -14,6 +14,6 @@ namespace VA
 	std::string OR(std::string op1, std::string op2);
 	std::string NOR(std::string op1, std::string op2);
 	std::string XOR(std::string op1, std::string op2);
-	std::string SHR(std::string op1, std::string op2);
-	std::string SHL(std::string op1, std::string op2);
+	std::string SHR(std::string op1, std::string op2, bool isFloat);
+	std::string SHL(std::string op1, std::string op2, bool isFloat);
 }
